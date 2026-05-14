@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import SectionCard from '../components/SectionCard'
 import { colors } from '../theme'
+import ContactSection from '../components/contact/ContactSection'
 
 const pageStyle = {
   maxWidth: 1100,
@@ -153,30 +154,7 @@ export default function Home() {
       </SectionCard>
 
       {/* ── Contact 섹션 ── */}
-      <div id="contact-section">
-        <SectionCard tag="CONTACT" title="Contact 섹션" bgColor={colors.bgBanner}>
-          <p style={bodyText}>
-            여기는 Contact 섹션입니다. 연락처, SNS, 간단한 메시지 폼이 들어갈 예정입니다.
-          </p>
-          <div style={{ marginTop: 24, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            {['이메일', 'GitHub', 'LinkedIn'].map((channel) => (
-              <span key={channel} style={{
-                padding: '8px 20px',
-                border: `1px solid ${colors.accent}`,
-                borderRadius: 20,
-                color: colors.accent,
-                fontSize: 14,
-                fontWeight: 500,
-              }}>
-                {channel}
-              </span>
-            ))}
-          </div>
-          <p style={{ ...bodyText, marginTop: 20, fontSize: 13, color: colors.textMuted }}>
-            * 실제 연락처 및 메시지 폼으로 교체 예정
-          </p>
-        </SectionCard>
-      </div>
+      <ContactSection />
 
     </main>
   )
