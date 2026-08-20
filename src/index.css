@@ -1,0 +1,118 @@
+/**
+ * 전역 스타일 + 컬러 팔레트 CSS 변수
+ * 출처: 컬러 팔레트 디자인 시스템.md (AI서치랩 실측 팔레트 v1.0)
+ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #ddff50;
+  --color-primary-light: #ecff9b;
+  --color-primary-dark: #c3e046;
+
+  /* Secondary Colors */
+  --color-secondary: #0b0b0b;
+  --color-accent: #cab8f6;
+
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #0b0b0b;
+
+  /* Text Colors */
+  --color-text-primary: #0b0b0b;
+  --color-text-secondary: #adadad;
+  --color-text-muted: #8a8a8a;
+
+  /* Interactive Colors */
+  --color-button-primary: #ddff50;
+  --color-button-hover: #c3e046;
+  --color-link: #0b0b0b;
+  --color-link-hover: #627a00;
+
+  /* Surface */
+  --color-surface-subtle: #f4f4f2;
+  --color-surface-dark: #191919;
+
+  /* Accent 확장 (정보 코드용 파스텔) */
+  --color-accent-cyan: #7fe0f0;
+  --color-accent-mint: #7fe0c1;
+  --color-accent-blue: #a8c7ff;
+  --color-accent-peach: #ffcba9;
+
+  /* Text 확장 */
+  --color-text-inverse: #ffffff;
+  --color-text-brand: #627a00;
+  --color-text-sub-on-light: #5a5a5a;
+
+  /* Border */
+  --color-border-light: #f8f8f7;
+  --color-border-dark: #171717;
+  --color-border-dark-strong: #1f1f1f;
+
+  /* Chip */
+  --color-chip-on-lime: #ecff9b;
+  --color-chip-on-purple: #b0a2d6;
+  --color-chip-on-cyan: #70c3d1;
+
+  /* Radius / Shadow — 네오브루탈리즘 형태 언어 */
+  --radius-card: 24px;
+  --radius-pill: 999px;
+  --shadow-card: none;
+}
+
+/* CSS 초기화 */
+* {
+  box-sizing: border-box;
+}
+
+/* HTML, Body 초기화 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Root 앱 컨테이너 설정 */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 링크 — 색만이 아니라 밑줄로도 상태를 구분 (WCAG 1.4.1) */
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(11 11 11 / 0.3);
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: currentColor;
+}
+
+/* 포커스 — 키보드 사용자를 위해 반드시 유지 */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 라임 배경 위에서는 라임 outline 이 보이지 않으므로 반전 */
+.bg-lime :focus-visible {
+  outline-color: var(--color-secondary);
+}
+
+/* 모션 민감 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
