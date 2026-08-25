@@ -8,7 +8,7 @@ const TABLE_NAME = 'portfolio_guestbook';
  * anon 역할에 조회 권한이 있는 컬럼만 명시적으로 요청한다.
  * (email 원본 컬럼은 권한에서 제외되어 있으므로 select('*') 를 사용하면 안 된다)
  */
-const SELECT_COLUMNS = 'id, author_name, message, affiliation, is_email_public, public_email, emoji, created_at';
+const SELECT_COLUMNS = 'id, author_name, message, affiliation, is_email_public, public_email, emoji, rating, keyword, sns, created_at';
 
 /** 한 번에 불러올 방명록 개수 */
 const PAGE_SIZE = 20;
@@ -56,7 +56,7 @@ export function useGuestbook() {
   /**
    * 방명록 새 글을 등록한다.
    *
-   * @param {object} form - { authorName, message, affiliation, email, isEmailPublic, emoji }
+   * @param {object} form - { authorName, message, affiliation, email, isEmailPublic, emoji, rating, keyword, sns }
    * @returns {Promise<boolean>} 등록 성공 여부
    */
   const submitEntry = useCallback(async (form) => {
@@ -71,6 +71,9 @@ export function useGuestbook() {
       email: trimmedEmail || null,
       is_email_public: Boolean(trimmedEmail) && form.isEmailPublic,
       emoji: form.emoji,
+      rating: form.rating || null,
+      keyword: form.keyword?.trim() || null,
+      sns: form.sns?.trim() || null,
     });
 
     setIsSubmitting(false);

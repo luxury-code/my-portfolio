@@ -1,14 +1,25 @@
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { formatDate } from '../../utils/format-date.js';
+
+/**
+ * SNS 계정 값이 링크로 열 수 있는 주소인지 판별한다.
+ *
+ * @param {string} sns - SNS 계정 또는 주소
+ * @returns {boolean} http(s) 로 시작하면 true
+ */
+function isLinkableSns(sns) {
+  return /^https?:\/\//i.test(sns);
+}
 
 /**
  * GuestbookEntry 컴포넌트
  * 방명록 한 건을 카드 형태로 표시한다.
  *
  * Props:
- * @param {object} entry - 방명록 데이터 { author_name, message, affiliation, public_email, emoji, created_at } [Required]
+ * @param {object} entry - 방명록 데이터 { author_name, message, affiliation, public_email, emoji, rating, keyword, sns, created_at } [Required]
  *
  * Example usage:
  * <GuestbookEntry entry={ entry } />
@@ -69,6 +80,18 @@ function GuestbookEntry({ entry }) {
             />
           ) : null }
 
+          { entry.keyword ? (
+            <Chip
+              size="small"
+              label={ `#${ entry.keyword }` }
+              sx={ {
+                bgcolor: 'accent.peach',
+                color: 'secondary.main',
+                fontSize: '0.75rem',
+              } }
+            />
+          ) : null }
+
           <Box
             component="span"
             sx={ {
@@ -82,6 +105,20 @@ function GuestbookEntry({ entry }) {
           </Box>
         </Stack>
 
+        { entry.rating ? (
+          <Rating
+            readOnly
+            value={ entry.rating }
+            aria-label={ `별점 ${ entry.rating }점` }
+            sx={ {
+              display: 'block',
+              mb: 0.75,
+              fontSize: '1rem',
+              '& .MuiRating-iconFilled': { color: 'accent.amber' },
+            } }
+          />
+        ) : null }
+
         <Box
           sx={ {
             color: 'text.primary',
@@ -94,20 +131,41 @@ function GuestbookEntry({ entry }) {
           { entry.message }
         </Box>
 
-        { entry.public_email ? (
-          <Box
-            component="a"
-            href={ `mailto:${ entry.public_email }` }
-            sx={ {
-              display: 'inline-block',
-              mt: 1,
-              color: 'text.secondary',
-              fontSize: '0.8rem',
-              wordBreak: 'break-all',
-            } }
+        { entry.public_email || entry.sns ? (
+          <Stack
+            direction="row"
+            sx={ { flexWrap: 'wrap', alignItems: 'center', gap: 1.5, mt: 1 } }
           >
-            { entry.public_email }
-          </Box>
+            { entry.public_email ? (
+              <Box
+                component="a"
+                href={ `mailto:${ entry.public_email }` }
+                sx={ {
+                  color: 'text.secondary',
+                  fontSize: '0.8rem',
+                  wordBreak: 'break-all',
+                } }
+              >
+                { entry.public_email }
+              </Box>
+            ) : null }
+
+            { entry.sns ? (
+              <Box
+                component={ isLinkableSns(entry.sns) ? 'a' : 'span' }
+                href={ isLinkableSns(entry.sns) ? entry.sns : undefined }
+                target={ isLinkableSns(entry.sns) ? '_blank' : undefined }
+                rel={ isLinkableSns(entry.sns) ? 'noopener noreferrer' : undefined }
+                sx={ {
+                  color: 'text.secondary',
+                  fontSize: '0.8rem',
+                  wordBreak: 'break-all',
+                } }
+              >
+                { entry.sns }
+              </Box>
+            ) : null }
+          </Stack>
         ) : null }
       </Box>
     </Box>

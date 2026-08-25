@@ -19,6 +19,7 @@ export const colorTokens = {
   accentMint: '#7FE0C1',
   accentBlue: '#A8C7FF',
   accentPeach: '#FFCBA9',
+  accentAmber: '#F0A868',
   textPrimary: '#0B0B0B',
   textSubOnLight: '#5A5A5A',
   textInverse: '#FFFFFF',
@@ -60,6 +61,7 @@ const theme = createTheme({
       mint: colorTokens.accentMint,
       blue: colorTokens.accentBlue,
       peach: colorTokens.accentPeach,
+      amber: colorTokens.accentAmber,
     },
     /** 팔레트 전용 확장 토큰 */
     brand: {

@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
+import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -24,6 +25,9 @@ const INITIAL_FORM = {
   email: '',
   isEmailPublic: false,
   emoji: EMOJI_OPTIONS[0],
+  rating: 0,
+  keyword: '',
+  sns: '',
 };
 
 /** 공통 입력 필드 스타일 — 따뜻한 톤의 흰 배경 + 둥근 모서리 */
@@ -64,6 +68,11 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
     if (value !== null) {
       setForm((prev) => ({ ...prev, emoji: value }));
     }
+  };
+
+  /** 별점 선택 — 선택 해제 시 0(미평가)으로 되돌린다 */
+  const handleRatingChange = (_event, value) => {
+    setForm((prev) => ({ ...prev, rating: value ?? 0 }));
   };
 
   /** 이메일 공개 여부 토글 */
@@ -143,6 +152,32 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
           sx={ fieldSx }
         />
 
+        <Grid container spacing={ 2 }>
+          <Grid size={ { xs: 12, md: 6 } }>
+            <TextField
+              fullWidth
+              label="한마디 키워드 (선택)"
+              placeholder="예: 감각적인"
+              value={ form.keyword }
+              onChange={ handleChange('keyword') }
+              slotProps={ { htmlInput: { maxLength: 20 } } }
+              sx={ fieldSx }
+            />
+          </Grid>
+
+          <Grid size={ { xs: 12, md: 6 } }>
+            <TextField
+              fullWidth
+              label="SNS 계정 (선택)"
+              placeholder="예: @instagram_id"
+              value={ form.sns }
+              onChange={ handleChange('sns') }
+              slotProps={ { htmlInput: { maxLength: 60 } } }
+              sx={ fieldSx }
+            />
+          </Grid>
+        </Grid>
+
         <Box>
           <TextField
             fullWidth
@@ -175,47 +210,83 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
           />
         </Box>
 
-        <Box>
-          <Typography
-            component="p"
-            sx={ {
-              mb: 1,
-              color: 'text.secondary',
-              fontSize: '0.875rem',
-              fontWeight: 700,
-            } }
-          >
-            오늘의 기분 이모지
-          </Typography>
+        <Grid container spacing={ 2 }>
+          <Grid size={ { xs: 12, md: 7 } }>
+            <Typography
+              component="p"
+              sx={ {
+                mb: 1,
+                color: 'text.secondary',
+                fontSize: '0.875rem',
+                fontWeight: 700,
+              } }
+            >
+              오늘의 기분 이모지
+            </Typography>
 
-          <ToggleButtonGroup
-            exclusive
-            value={ form.emoji }
-            onChange={ handleEmojiChange }
-            aria-label="이모지 선택"
-            sx={ {
-              flexWrap: 'wrap',
-              gap: 1,
-              '& .MuiToggleButtonGroup-grouped': {
-                border: '1px solid rgb(11 11 11 / 0.12)',
-                borderRadius: '999px !important',
-                minWidth: 44,
-                minHeight: 44,
-                fontSize: '1.15rem',
-                '&.Mui-selected': {
-                  bgcolor: 'accent.peach',
-                  '&:hover': { bgcolor: 'accent.peach' },
+            <ToggleButtonGroup
+              exclusive
+              value={ form.emoji }
+              onChange={ handleEmojiChange }
+              aria-label="이모지 선택"
+              sx={ {
+                flexWrap: 'wrap',
+                gap: 1,
+                '& .MuiToggleButtonGroup-grouped': {
+                  border: '1px solid rgb(11 11 11 / 0.12)',
+                  borderRadius: '999px !important',
+                  minWidth: 44,
+                  minHeight: 44,
+                  fontSize: '1.15rem',
+                  '&.Mui-selected': {
+                    bgcolor: 'accent.peach',
+                    '&:hover': { bgcolor: 'accent.peach' },
+                  },
                 },
-              },
-            } }
-          >
-            { EMOJI_OPTIONS.map((emoji) => (
-              <ToggleButton key={ emoji } value={ emoji } aria-label={ emoji }>
-                { emoji }
-              </ToggleButton>
-            )) }
-          </ToggleButtonGroup>
-        </Box>
+              } }
+            >
+              { EMOJI_OPTIONS.map((emoji) => (
+                <ToggleButton key={ emoji } value={ emoji } aria-label={ emoji }>
+                  { emoji }
+                </ToggleButton>
+              )) }
+            </ToggleButtonGroup>
+          </Grid>
+
+          <Grid size={ { xs: 12, md: 5 } }>
+            <Typography
+              component="p"
+              sx={ {
+                mb: 1,
+                color: 'text.secondary',
+                fontSize: '0.875rem',
+                fontWeight: 700,
+              } }
+            >
+              별점 평가 (선택)
+            </Typography>
+
+            <Box sx={ { display: 'flex', alignItems: 'center', gap: 1.5, minHeight: 44 } }>
+              <Rating
+                value={ form.rating }
+                onChange={ handleRatingChange }
+                aria-label="별점 평가"
+                sx={ {
+                  fontSize: '1.9rem',
+                  '& .MuiRating-iconFilled': { color: 'accent.amber' },
+                  '& .MuiRating-iconHover': { color: 'accent.amber' },
+                } }
+              />
+
+              <Box
+                component="span"
+                sx={ { color: 'text.secondary', fontSize: '0.8rem', whiteSpace: 'nowrap' } }
+              >
+                { form.rating > 0 ? `${ form.rating } / 5` : '미평가' }
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
 
         <Box sx={ { display: 'flex', justifyContent: 'flex-end' } }>
           <Button
