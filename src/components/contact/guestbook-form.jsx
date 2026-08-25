@@ -254,25 +254,33 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
           </Grid>
 
           <Grid size={ { xs: 12, md: 5 } }>
-            <Typography
-              component="p"
+            <Box
               sx={ {
-                mb: 1,
-                color: 'text.secondary',
-                fontSize: '0.875rem',
-                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 1.5,
+                minHeight: 44,
               } }
             >
-              별점 평가 (선택)
-            </Typography>
+              <Typography
+                component="p"
+                sx={ {
+                  color: 'text.secondary',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                } }
+              >
+                별점 평가 (선택)
+              </Typography>
 
-            <Box sx={ { display: 'flex', alignItems: 'center', gap: 1.5, minHeight: 44 } }>
               <Rating
                 value={ form.rating }
                 onChange={ handleRatingChange }
                 aria-label="별점 평가"
                 sx={ {
-                  fontSize: '1.9rem',
+                  fontSize: '1.6rem',
                   '& .MuiRating-iconFilled': { color: 'accent.amber' },
                   '& .MuiRating-iconHover': { color: 'accent.amber' },
                 } }

@@ -80,6 +80,16 @@ function GuestbookEntry({ entry }) {
             />
           ) : null }
 
+          { entry.rating ? (
+            <Rating
+              readOnly
+              size="small"
+              value={ entry.rating }
+              aria-label={ `별점 ${ entry.rating }점` }
+              sx={ { '& .MuiRating-iconFilled': { color: 'accent.amber' } } }
+            />
+          ) : null }
+
           { entry.keyword ? (
             <Chip
               size="small"
@@ -104,20 +114,6 @@ function GuestbookEntry({ entry }) {
             { formatDate(entry.created_at) }
           </Box>
         </Stack>
-
-        { entry.rating ? (
-          <Rating
-            readOnly
-            value={ entry.rating }
-            aria-label={ `별점 ${ entry.rating }점` }
-            sx={ {
-              display: 'block',
-              mb: 0.75,
-              fontSize: '1rem',
-              '& .MuiRating-iconFilled': { color: 'accent.amber' },
-            } }
-          />
-        ) : null }
 
         <Box
           sx={ {
