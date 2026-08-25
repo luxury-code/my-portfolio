@@ -30,6 +30,7 @@
 
   /* Surface */
   --color-surface-subtle: #f4f4f2;
+  --color-surface-warm: #fff4ec;
   --color-surface-dark: #191919;
 
   /* Accent 확장 (정보 코드용 파스텔) */

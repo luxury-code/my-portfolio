@@ -31,6 +31,14 @@ const TONE_PRESETS = {
     labelText: 'secondary.main',
     border: '2px solid #0B0B0B',
   },
+  warm: {
+    bg: 'brand.surfaceWarm',
+    title: 'text.primary',
+    body: 'text.secondary',
+    labelBg: 'accent.peach',
+    labelText: 'secondary.main',
+    border: 'none',
+  },
   dark: {
     bg: 'brand.dark',
     title: 'brand.textInverse',
@@ -50,7 +58,7 @@ const TONE_PRESETS = {
  * @param {string} label - 섹션을 식별하는 짧은 태그 텍스트 [Required]
  * @param {string} title - 섹션 제목 [Required]
  * @param {string} description - 섹션 설명 문구 [Required]
- * @param {string} tone - 색상 톤 ('lime' | 'subtle' | 'light' | 'dark') [Optional, 기본값: 'light']
+ * @param {string} tone - 색상 톤 ('lime' | 'subtle' | 'light' | 'warm' | 'dark') [Optional, 기본값: 'light']
  * @param {node} children - 카드 하단에 추가로 렌더링할 요소 [Optional]
  *
  * Example usage:

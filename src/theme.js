@@ -12,6 +12,7 @@ export const colorTokens = {
   bgPrimary: '#FFFFFF',
   bgSecondary: '#0B0B0B',
   surfaceSubtle: '#F4F4F2',
+  surfaceWarm: '#FFF4EC',
   surfaceDark: '#191919',
   accentLavender: '#CAB8F6',
   accentCyan: '#7FE0F0',
@@ -64,6 +65,7 @@ const theme = createTheme({
     brand: {
       text: colorTokens.textBrand,
       surfaceSubtle: colorTokens.surfaceSubtle,
+      surfaceWarm: colorTokens.surfaceWarm,
       surfaceDark: colorTokens.surfaceDark,
       dark: colorTokens.bgSecondary,
       textInverse: colorTokens.textInverse,
