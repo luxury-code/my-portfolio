@@ -54,7 +54,7 @@ function ProjectsPage() {
               fontSize: { xs: '2rem', md: '3rem' },
             } }
           >
-            만들어 온 것들
+            나의 프로젝트들
           </Typography>
 
           <Typography
