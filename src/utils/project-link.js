@@ -25,28 +25,6 @@ export function getThumbnailUrl(project) {
 }
 
 /**
- * detail_url 이 GitHub 저장소를 가리키는지 판별한다.
- * 버튼 라벨/아이콘을 결정하는 데 사용한다.
- *
- * @param {string} url - 검사할 URL
- * @returns {boolean} github.com 도메인이면 true
- *
- * Example usage:
- * isGithubUrl('https://github.com/luxury-code/my-community'); // true
- */
-export function isGithubUrl(url) {
-  if (!url) {
-    return false;
-  }
-
-  try {
-    return new URL(url).hostname.endsWith('github.com');
-  } catch {
-    return false;
-  }
-}
-
-/**
  * ISO 날짜 문자열을 'YYYY. MM.' 형태의 작업 시점 표기로 변환한다.
  *
  * @param {string} isoString - ISO 8601 형식의 날짜 문자열

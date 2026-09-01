@@ -9,44 +9,51 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ProjectThumbnail from './project-thumbnail.jsx';
 import TechStackList from './tech-stack-list.jsx';
-import { formatWorkPeriod, getThumbnailUrl, isGithubUrl } from '../../utils/project-link.js';
+import { formatWorkPeriod, getThumbnailUrl } from '../../utils/project-link.js';
 
 /** 클릭 피드백(로딩 표시) 유지 시간 (ms) */
 const CLICK_FEEDBACK_MS = 1200;
 
 /**
  * ProjectCard 컴포넌트
- * 썸네일 · 제목 · 한 줄 설명 · 기술 스택 뱃지 · 작업 날짜 · 이동 버튼으로 구성된 프로젝트 카드.
+ * 썸네일 · 제목 · 한 줄 설명 · 기술 스택 뱃지 · 작업 날짜와
+ * 배포 사이트 / GitHub 저장소 두 개의 이동 버튼으로 구성된 프로젝트 카드.
  * 호버 시 확대 + 오프셋 그림자, 클릭 시 로딩 표시, 모바일에서는 눌림 피드백을 제공한다.
  *
  * Props:
- * @param {object} project - 프로젝트 데이터 { title, description, tech_stack, detail_url, thumbnail_url, created_at } [Required]
+ * @param {object} project - 프로젝트 데이터 { title, description, tech_stack, detail_url, github_url, thumbnail_url, created_at } [Required]
  *
  * Example usage:
  * <ProjectCard project={ project } />
  */
 function ProjectCard({ project }) {
-  const [isOpening, setIsOpening] = useState(false);
+  const [openingKey, setOpeningKey] = useState('');
   const timerRef = useRef(null);
 
   /** 언마운트 시 남은 타이머 정리 */
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
   const thumbnailUrl = getThumbnailUrl(project);
-  const isRepositoryLink = isGithubUrl(project.detail_url);
   const workPeriod = formatWorkPeriod(project.created_at);
+  const hasSiteLink = Boolean(project.detail_url);
+  const hasRepoLink = Boolean(project.github_url);
 
-  /** 새 탭으로 프로젝트를 열고 잠시 로딩 상태를 보여준다 */
-  const handleOpen = () => {
-    if (!project.detail_url || isOpening) {
+  /**
+   * 새 탭으로 링크를 열고 해당 버튼에만 잠시 로딩 상태를 보여준다.
+   *
+   * @param {string} key - 버튼 구분 키 ('site' | 'repo')
+   * @param {string} url - 열어야 할 URL
+   */
+  const handleOpen = (key, url) => {
+    if (!url || openingKey) {
       return;
     }
 
-    setIsOpening(true);
-    window.open(project.detail_url, '_blank', 'noopener,noreferrer');
+    setOpeningKey(key);
+    window.open(url, '_blank', 'noopener,noreferrer');
 
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setIsOpening(false), CLICK_FEEDBACK_MS);
+    timerRef.current = setTimeout(() => setOpeningKey(''), CLICK_FEEDBACK_MS);
   };
 
   return (
@@ -73,7 +80,7 @@ function ProjectCard({ project }) {
         '&:active': { transform: 'scale(0.985)' },
       } }
     >
-      { isOpening && (
+      { openingKey && (
         <LinearProgress
           sx={ {
             position: 'absolute',
@@ -141,27 +148,53 @@ function ProjectCard({ project }) {
           </Box>
         ) }
 
-        <Button
-          fullWidth
-          onClick={ handleOpen }
-          disabled={ !project.detail_url }
-          startIcon={
-            isOpening
-              ? <CircularProgress size={ 16 } sx={ { color: 'inherit' } } />
-              : (isRepositoryLink ? <GitHubIcon /> : <LaunchIcon />)
-          }
-          sx={ {
-            mt: 0.5,
-            minHeight: 40,
-            fontSize: '0.85rem',
-            bgcolor: 'secondary.main',
-            color: 'brand.textInverse',
-            '&:hover': { bgcolor: 'brand.surfaceDark' },
-            '&.Mui-disabled': { bgcolor: 'brand.surfaceSubtle', color: 'text.secondary' },
-          } }
-        >
-          { isRepositoryLink ? 'GitHub' : '사이트 보기' }
-        </Button>
+        <Box sx={ { display: 'flex', gap: 1, mt: 0.5 } }>
+          { hasSiteLink && (
+            <Button
+              fullWidth
+              onClick={ () => handleOpen('site', project.detail_url) }
+              startIcon={
+                openingKey === 'site'
+                  ? <CircularProgress size={ 16 } sx={ { color: 'inherit' } } />
+                  : <LaunchIcon />
+              }
+              sx={ {
+                minHeight: 40,
+                px: 1.5,
+                fontSize: '0.82rem',
+                bgcolor: 'secondary.main',
+                color: 'brand.textInverse',
+                '&:hover': { bgcolor: 'brand.surfaceDark' },
+              } }
+            >
+              사이트
+            </Button>
+          ) }
+
+          { hasRepoLink && (
+            <Button
+              fullWidth
+              onClick={ () => handleOpen('repo', project.github_url) }
+              startIcon={
+                openingKey === 'repo'
+                  ? <CircularProgress size={ 16 } sx={ { color: 'inherit' } } />
+                  : <GitHubIcon />
+              }
+              sx={ {
+                minHeight: 40,
+                px: 1.5,
+                fontSize: '0.82rem',
+                bgcolor: 'background.paper',
+                color: 'secondary.main',
+                border: '2px solid',
+                borderColor: 'secondary.main',
+                '&:hover': { bgcolor: 'primary.main' },
+              } }
+            >
+              GitHub
+            </Button>
+          ) }
+        </Box>
       </Box>
     </Card>
   );

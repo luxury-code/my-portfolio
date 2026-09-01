@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase.js';
 const TABLE_NAME = 'portfolio_projects';
 
 /** anon 역할에 조회 권한이 있는 컬럼만 명시적으로 요청한다 */
-const SELECT_COLUMNS = 'id, title, description, tech_stack, detail_url, thumbnail_url, sort_order, created_at';
+const SELECT_COLUMNS = 'id, title, description, tech_stack, detail_url, github_url, thumbnail_url, sort_order, created_at';
 
 /**
  * useProjects 커스텀 훅
