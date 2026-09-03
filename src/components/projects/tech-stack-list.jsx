@@ -38,7 +38,7 @@ function TechStackList({ techStack = [] }) {
           size="small"
           sx={ {
             bgcolor: BADGE_COLORS[index % BADGE_COLORS.length],
-            color: 'secondary.main',
+            color: 'brand.onBrand',
             fontSize: { xs: '0.68rem', md: '0.72rem' },
             height: 24,
             '& .MuiChip-label': { px: 1.25 },

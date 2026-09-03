@@ -27,9 +27,9 @@ function ProjectThumbnail({ src, title }) {
         width: '100%',
         aspectRatio: '16 / 9',
         overflow: 'hidden',
-        bgcolor: 'brand.surfaceSubtle',
-        borderBottom: '2px solid',
-        borderColor: 'secondary.main',
+        bgcolor: 'surface.subtle',
+        borderBottom: '1px solid',
+        borderColor: 'line.soft',
       } }
     >
       { showFallback ? (
@@ -41,7 +41,7 @@ function ProjectThumbnail({ src, title }) {
             alignItems: 'center',
             justifyContent: 'center',
             bgcolor: 'primary.main',
-            color: 'secondary.main',
+            color: 'brand.onBrand',
             fontSize: { xs: '1.75rem', md: '2rem' },
             fontWeight: 700,
             letterSpacing: '-0.02em',

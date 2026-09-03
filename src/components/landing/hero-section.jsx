@@ -1,11 +1,45 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import AuroraBackdrop from '../hero/aurora-backdrop.jsx';
+import StarField from '../hero/star-field.jsx';
+import { useMotionPreference } from '../../hooks/use-motion-preference.js';
+import { fontFamilies } from '../../theme.js';
+
+/** 헤드라인 — 한 줄씩 차례로 떠오른다 */
+const HEADLINE_LINES = [
+  '어두운 화면 위에',
+  '빛이 어떻게 움직이는지',
+  '계속 궁금했습니다.',
+];
+
+/** 등장 애니메이션 공통 이징 — 사이트 전체가 이 곡선 하나만 쓴다 */
+const EASE = 'cubic-bezier(.16, 1, .3, 1)';
+
+/**
+ * 스크롤 진입 없이 최초 1회만 재생되는 등장 애니메이션 스타일을 만든다.
+ *
+ * @param {number} delay - 시작 지연 시간(초)
+ * @returns {object} sx 에 펼쳐 넣을 애니메이션 속성
+ */
+function riseIn(delay) {
+  return {
+    opacity: 0,
+    animation: `hero-rise 0.7s ${ EASE } ${ delay }s forwards`,
+  };
+}
 
 /**
  * HeroSection 컴포넌트
  * Home 페이지 최상단 히어로 영역.
- * 라임 색면은 데스크톱에서만 전면 배경으로 쓰고, 모바일에서는 뱃지로 축소한다.
- * (컬러 가이드: 모바일 첫 화면에서 라임 면적 50% 초과 금지)
+ *
+ * 레이어 구성 (아래 → 위)
+ *   L1 밤하늘 베이스  · surface 색면
+ *   L2 오로라         · AuroraBackdrop — 마우스를 따라온다
+ *   L3 별            · StarField — 마우스를 피한다
+ *   L4 비네트        · AuroraBackdrop 내부
+ *   L5 텍스트        · 헤드라인 · 서브라인 · 스크롤 유도
+ *
+ * (기획: docs/portfolio-plan.md §2)
  *
  * Props: 없음
  *
@@ -13,57 +47,108 @@ import Typography from '@mui/material/Typography';
  * <HeroSection />
  */
 function HeroSection() {
+  const { canTrackPointer } = useMotionPreference();
+
   return (
     <Box
       component="section"
-      className="bg-lime"
+      aria-labelledby="hero-headline"
       sx={ {
+        position: 'relative',
         width: '100%',
-        bgcolor: { xs: 'background.default', md: 'primary.main' },
-        border: { xs: '2px solid #0B0B0B', md: 'none' },
-        borderRadius: { xs: '20px', md: '24px' },
-        p: { xs: 3, md: 7 },
+        overflow: 'hidden',
+        isolation: 'isolate',
+        borderRadius: { xs: '18px', md: '24px' },
+        border: '1px solid',
+        borderColor: 'line.soft',
+        bgcolor: 'secondary.main',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        px: { xs: 3, md: 7 },
+        py: { xs: 7, md: 10 },
+        minHeight: { xs: '76vh', md: '84vh' },
+        '@supports (height: 100svh)': {
+          minHeight: { xs: '76svh', md: '84svh' },
+        },
       } }
     >
-      <Box
-        component="span"
-        sx={ {
-          display: 'inline-block',
-          bgcolor: { xs: 'primary.main', md: 'secondary.main' },
-          color: { xs: 'secondary.main', md: 'primary.main' },
-          borderRadius: '999px',
-          px: 1.75,
-          py: 0.5,
-          fontSize: { xs: '0.72rem', md: '0.78rem' },
-          fontWeight: 700,
-          letterSpacing: '0.08em',
-        } }
-      >
-        01 / HERO
+      <AuroraBackdrop />
+      <StarField />
+
+      <Box sx={ { position: 'relative', zIndex: 1 } }>
+        <Box
+          component="span"
+          sx={ {
+            display: 'inline-block',
+            color: 'primary.main',
+            fontFamily: fontFamilies.mono,
+            fontSize: 'clamp(0.7rem, 0.9vw, 0.78rem)',
+            fontWeight: 700,
+            letterSpacing: '0.18em',
+            ...riseIn(0.05),
+          } }
+        >
+          00 — HERO
+        </Box>
+
+        <Typography
+          id="hero-headline"
+          variant="h1"
+          sx={ {
+            mt: 2.5,
+            mb: 3,
+            color: 'text.primary',
+            maxWidth: 980,
+            textShadow: '0 2px 24px rgb(11 11 11 / 0.55)',
+          } }
+        >
+          { HEADLINE_LINES.map((line, index) => (
+            <Box
+              key={ line }
+              component="span"
+              sx={ { display: 'block', ...riseIn(0.18 + index * 0.14) } }
+            >
+              { line }
+            </Box>
+          )) }
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={ {
+            color: 'text.secondary',
+            maxWidth: 560,
+            textShadow: '0 1px 16px rgb(11 11 11 / 0.6)',
+            ...riseIn(0.68),
+          } }
+        >
+          프론트엔드 개발자 손은솔 — 디자인과 대화로 화면을 만듭니다.
+        </Typography>
+
+        <Box
+          sx={ {
+            mt: { xs: 5, md: 7 },
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 1.25,
+            color: 'text.muted',
+            fontFamily: fontFamilies.mono,
+            fontSize: 'clamp(0.72rem, 0.95vw, 0.82rem)',
+            letterSpacing: '0.08em',
+            ...riseIn(0.86),
+          } }
+        >
+          <Box
+            component="span"
+            aria-hidden="true"
+            sx={ { animation: `scroll-hint 2.4s ${ EASE } infinite` } }
+          >
+            ↓
+          </Box>
+          { canTrackPointer ? '마우스를 움직여 보세요' : '아래로 스크롤해 보세요' }
+        </Box>
       </Box>
-
-      <Typography
-        variant="h1"
-        sx={ {
-          mt: 2,
-          mb: 2,
-          color: 'secondary.main',
-          fontSize: { xs: '2rem', md: '3.5rem' },
-        } }
-      >
-        Hero 섹션
-      </Typography>
-
-      <Typography
-        sx={ {
-          color: 'rgb(11 11 11 / 0.75)',
-          fontSize: { xs: '1rem', md: '1.2rem' },
-          lineHeight: 1.6,
-          maxWidth: 640,
-        } }
-      >
-        여기는 Hero 섹션입니다. 메인 비주얼, 이름, 간단 소개가 들어갈 예정입니다.
-      </Typography>
     </Box>
   );
 }

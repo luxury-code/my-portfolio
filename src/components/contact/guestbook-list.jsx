@@ -18,7 +18,7 @@ function GuestbookList({ entries, isLoading = false }) {
   if (isLoading) {
     return (
       <Box sx={ { display: 'flex', justifyContent: 'center', py: 4 } }>
-        <CircularProgress size={ 28 } sx={ { color: 'secondary.main' } } />
+        <CircularProgress size={ 28 } sx={ { color: 'primary.main' } } />
       </Box>
     );
   }
@@ -27,8 +27,10 @@ function GuestbookList({ entries, isLoading = false }) {
     return (
       <Box
         sx={ {
-          bgcolor: 'background.default',
-          borderRadius: '20px',
+          bgcolor: 'surface.subtle',
+          border: '1px dashed',
+          borderColor: 'line.soft',
+          borderRadius: '16px',
           p: { xs: 3, md: 4 },
           textAlign: 'center',
           color: 'text.secondary',

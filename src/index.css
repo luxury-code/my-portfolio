@@ -1,64 +1,92 @@
 /**
- * 전역 스타일 + 컬러 팔레트 CSS 변수
- * 출처: 컬러 팔레트 디자인 시스템.md (AI서치랩 실측 팔레트 v1.0)
+ * 전역 스타일 + 컬러 팔레트 CSS 변수 (v2 — 다크 베이스)
+ *
+ * 컨셉: SOL / AURORA — 밤하늘(#0B0B0B) 위에 오로라(라임 → 연노랑 → 민트 → 라벤더)
+ * 기획 문서: docs/portfolio-plan.md §5
+ *
+ * 브랜드 색(라임/파스텔)은 테마와 무관하게 고정이고,
+ * 표면(surface)·텍스트·경계선만 테마에 따라 바뀐다.
+ * 라이트 모드 토글(P6)을 대비해 [data-theme='light'] 블록을 미리 열어 두었다.
  */
 
 :root {
-  /* Primary Colors */
-  --color-primary: #ddff50;
-  --color-primary-light: #ecff9b;
+  /* ─── 브랜드 (테마 무관 고정) ─────────────────────────── */
+  --color-primary: #ddff50; /* 네온 라임 · 오로라 코어 · CTA */
+  --color-primary-light: #ecff9b; /* 연노랑 · 오로라 확산 */
   --color-primary-dark: #c3e046;
-
-  /* Secondary Colors */
-  --color-secondary: #0b0b0b;
-  --color-accent: #cab8f6;
-
-  /* Background Colors */
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #0b0b0b;
-
-  /* Text Colors */
-  --color-text-primary: #0b0b0b;
-  --color-text-secondary: #adadad;
-  --color-text-muted: #8a8a8a;
-
-  /* Interactive Colors */
-  --color-button-primary: #ddff50;
-  --color-button-hover: #c3e046;
-  --color-link: #0b0b0b;
-  --color-link-hover: #627a00;
-
-  /* Surface */
-  --color-surface-subtle: #f4f4f2;
-  --color-surface-warm: #fff4ec;
-  --color-surface-dark: #191919;
-
-  /* Accent 확장 (정보 코드용 파스텔) */
-  --color-accent-cyan: #7fe0f0;
+  --color-accent-lavender: #cab8f6; /* 오로라 끝단 */
   --color-accent-mint: #7fe0c1;
+  --color-accent-cyan: #7fe0f0;
   --color-accent-blue: #a8c7ff;
   --color-accent-peach: #ffcba9;
   --color-accent-amber: #f0a868;
 
-  /* Text 확장 */
-  --color-text-inverse: #ffffff;
-  --color-text-brand: #627a00;
-  --color-text-sub-on-light: #5a5a5a;
+  /* ─── 오로라 그라디언트 스톱 (P1 Hero 에서 사용) ────────── */
+  --aurora-core: #ddff50;
+  --aurora-spread: #ecff9b;
+  --aurora-mid: #7fe0c1;
+  --aurora-edge: #cab8f6;
 
-  /* Border */
-  --color-border-light: #f8f8f7;
-  --color-border-dark: #171717;
-  --color-border-dark-strong: #1f1f1f;
+  /* ─── 표면 (다크 기본) ───────────────────────────────── */
+  --color-bg-base: #0b0b0b; /* 밤하늘 · 페이지 배경 */
+  --color-surface-elevated: #131313; /* 카드 */
+  --color-surface-subtle: #191919; /* 한 단계 더 뜬 면 */
+  --color-surface-warm: #1a1613; /* Contact — 따뜻한 기운의 다크 */
+  --color-surface-inset: #0e0e0e; /* 입력 필드처럼 파인 면 */
 
-  /* Chip */
-  --color-chip-on-lime: #ecff9b;
-  --color-chip-on-purple: #b0a2d6;
-  --color-chip-on-cyan: #70c3d1;
+  /* ─── 텍스트 ─────────────────────────────────────────── */
+  --color-text-primary: #f8f8f7; /* 별빛 화이트 · 대비 18.9:1 */
+  --color-text-secondary: #adadad; /* 대비 7.6:1 (AAA) */
+  --color-text-muted: #8a8a8a; /* 대비 5.1:1 (AA) */
+  --color-text-on-brand: #0b0b0b; /* 라임 위에 얹는 글자 */
 
-  /* Radius / Shadow — 네오브루탈리즘 형태 언어 */
-  --radius-card: 24px;
+  /* ─── 경계선 ─────────────────────────────────────────── */
+  --color-line-soft: rgb(248 248 247 / 0.12);
+  --color-line: rgb(248 248 247 / 0.2);
+  --color-line-strong: rgb(248 248 247 / 0.32);
+
+  /* ─── 링크 ───────────────────────────────────────────── */
+  --color-link: #f8f8f7;
+  --color-link-hover: #ddff50;
+  --color-link-underline: rgb(248 248 247 / 0.32);
+
+  /* ─── 형태 언어 ──────────────────────────────────────── */
+  --radius-card: 20px;
   --radius-pill: 999px;
-  --shadow-card: none;
+  --shadow-offset: 6px 6px 0 var(--color-primary); /* 네오브루탈 오프셋 */
+
+  /* ─── 폰트 3종 ───────────────────────────────────────── */
+  --font-display: 'Noto Serif KR', 'Nanum Myeongjo', Georgia, 'Times New Roman', serif;
+  --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  color-scheme: dark;
+}
+
+/* 라이트 모드 (P6 테마 토글에서 활성화 — 표면/텍스트만 뒤집는다) */
+:root[data-theme='light'] {
+  --color-bg-base: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-surface-subtle: #f4f4f2;
+  --color-surface-warm: #fff4ec;
+  --color-surface-inset: #ffffff;
+
+  --color-text-primary: #0b0b0b;
+  --color-text-secondary: #5a5a5a;
+  --color-text-muted: #8a8a8a;
+
+  --color-line-soft: rgb(11 11 11 / 0.1);
+  --color-line: rgb(11 11 11 / 0.18);
+  --color-line-strong: rgb(11 11 11 / 0.3);
+
+  --color-link: #0b0b0b;
+  --color-link-hover: #627a00;
+  --color-link-underline: rgb(11 11 11 / 0.3);
+
+  --shadow-offset: 6px 6px 0 #0b0b0b;
+
+  color-scheme: light;
 }
 
 /* CSS 초기화 */
@@ -73,8 +101,11 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background: var(--color-bg-primary);
+  background: var(--color-bg-base);
   color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Root 앱 컨테이너 설정 */
@@ -90,7 +121,7 @@ a {
   color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgb(11 11 11 / 0.3);
+  text-decoration-color: var(--color-link-underline);
   transition: color 0.18s ease, text-decoration-color 0.18s ease;
 }
 
@@ -108,7 +139,79 @@ a:hover {
 
 /* 라임 배경 위에서는 라임 outline 이 보이지 않으므로 반전 */
 .bg-lime :focus-visible {
-  outline-color: var(--color-secondary);
+  outline-color: var(--color-text-on-brand);
+}
+
+/* 스크롤바 — 다크 배경에 맞춰 어둡게 */
+* {
+  scrollbar-color: var(--color-line) transparent;
+  scrollbar-width: thin;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Hero 모션
+   오로라 3겹은 서로 다른 주기·경로로 아주 느리게 일렁인다.
+   마우스를 움직이지 않아도 살아 있게 만드는 층이다.
+   ───────────────────────────────────────────────────────── */
+
+@keyframes aurora-drift-a {
+  0% {
+    transform: translate3d(-3%, 2%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(4%, -3%, 0) scale(1.12);
+  }
+}
+
+@keyframes aurora-drift-b {
+  0% {
+    transform: translate3d(3%, -2%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-4%, 3%, 0) scale(0.96);
+  }
+}
+
+@keyframes aurora-drift-c {
+  0% {
+    transform: translate3d(-2%, -3%, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(3%, 4%, 0) scale(1.14);
+  }
+}
+
+/* 헤드라인 등장 — 아래에서 떠오르며 나타난다 */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 스크롤 유도 화살표 — 아래로 살짝 흘렀다 돌아온다 */
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(0, 6px, 0);
+    opacity: 1;
+  }
+}
+
+/* 인트로 로더 퇴장 */
+@keyframes loader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* 모션 민감 사용자 배려 */
@@ -116,5 +219,7 @@ a:hover {
   * {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
 }

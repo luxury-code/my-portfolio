@@ -2,10 +2,59 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/my-portfolio/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="포트폴리오 템플릿 사이트" />
-    <title>My Portfolio</title>
+
+    <!-- 기본 메타 -->
+    <title>손은솔 · 프론트엔드 개발자 포트폴리오</title>
+    <meta
+      name="description"
+      content="어두운 화면 위에 빛이 어떻게 움직이는지 궁금했던 프론트엔드 개발자 손은솔의 포트폴리오입니다. React · Vite · MUI · Supabase 로 만든 프로젝트와 성장 기록을 담았습니다."
+    />
+    <meta name="author" content="손은솔" />
+    <meta name="theme-color" content="#0B0B0B" />
+
+    <!-- Open Graph (카카오톡 · 슬랙 · 페이스북 링크 미리보기) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SOL / AURORA" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="손은솔 · 프론트엔드 개발자 포트폴리오" />
+    <meta
+      property="og:description"
+      content="어두운 화면 위에 빛이 어떻게 움직이는지 궁금했습니다. React · Supabase 로 만든 프로젝트와 성장 기록."
+    />
+    <meta property="og:url" content="https://luxury-code.github.io/my-portfolio/" />
+    <!-- TODO: 1200x630 og-image.png 를 public/ 에 추가한 뒤 아래 주석을 해제할 것 -->
+    <!-- <meta property="og:image" content="https://luxury-code.github.io/my-portfolio/og-image.png" /> -->
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="손은솔 · 프론트엔드 개발자 포트폴리오" />
+    <meta
+      name="twitter:description"
+      content="어두운 화면 위에 빛이 어떻게 움직이는지 궁금했습니다."
+    />
+
+    <link rel="canonical" href="https://luxury-code.github.io/my-portfolio/" />
+    <link rel="icon" type="image/svg+xml" href="/my-portfolio/favicon.svg" />
+
+    <!--
+      폰트 3종 체계
+      - Noto Serif KR   : 디스플레이(h1/h2) — 매거진 감성의 명조
+      - Pretendard      : 본문/UI — 한글 가독성 (dynamic subset 으로 필요한 글리프만 내려받음)
+      - JetBrains Mono  : 라벨·숫자·숙련도 표기 (italic 포함)
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    />
   </head>
   <body>
     <div id="root"></div>

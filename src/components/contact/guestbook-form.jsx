@@ -30,15 +30,16 @@ const INITIAL_FORM = {
   sns: '',
 };
 
-/** 공통 입력 필드 스타일 — 따뜻한 톤의 흰 배경 + 둥근 모서리 */
+/** 공통 입력 필드 스타일 — 밤하늘보다 파인 면 + 둥근 모서리 */
 const fieldSx = {
   '& .MuiOutlinedInput-root': {
-    bgcolor: 'background.default',
-    borderRadius: '16px',
-    '& fieldset': { borderColor: 'rgb(11 11 11 / 0.12)' },
-    '&:hover fieldset': { borderColor: 'rgb(11 11 11 / 0.28)' },
-    '&.Mui-focused fieldset': { borderColor: 'secondary.main', borderWidth: 2 },
+    bgcolor: 'surface.inset',
+    borderRadius: '14px',
+    '& fieldset': { borderColor: 'line.soft' },
+    '&:hover fieldset': { borderColor: 'line.main' },
+    '&.Mui-focused fieldset': { borderColor: 'primary.main', borderWidth: 2 },
   },
+  '& .MuiInputLabel-root.Mui-focused': { color: 'primary.main' },
 };
 
 /**
@@ -102,8 +103,10 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
       component="form"
       onSubmit={ handleSubmit }
       sx={ {
-        bgcolor: 'background.default',
-        borderRadius: '20px',
+        bgcolor: 'surface.elevated',
+        border: '1px solid',
+        borderColor: 'line.soft',
+        borderRadius: '16px',
         p: { xs: 2, md: 3 },
       } }
     >
@@ -196,7 +199,7 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
                 checked={ form.isEmailPublic }
                 onChange={ handleEmailPublicChange }
                 disabled={ form.email.trim().length === 0 }
-                sx={ { color: 'text.secondary', '&.Mui-checked': { color: 'secondary.main' } } }
+                sx={ { color: 'text.secondary', '&.Mui-checked': { color: 'primary.main' } } }
               />
             }
             label="이메일을 방명록에 공개할래요"
@@ -233,7 +236,9 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
                 flexWrap: 'wrap',
                 gap: 1,
                 '& .MuiToggleButtonGroup-grouped': {
-                  border: '1px solid rgb(11 11 11 / 0.12)',
+                  border: '1px solid',
+                  borderColor: 'line.soft',
+                  color: 'text.primary',
                   borderRadius: '999px !important',
                   minWidth: 44,
                   minHeight: 44,
@@ -302,9 +307,9 @@ function GuestbookForm({ onSubmit, isSubmitting = false }) {
             disabled={ isSubmitting }
             sx={ {
               bgcolor: 'primary.main',
-              color: 'secondary.main',
-              '&:hover': { bgcolor: 'primary.dark' },
-              '&.Mui-disabled': { bgcolor: 'brand.surfaceSubtle', color: 'text.secondary' },
+              color: 'brand.onBrand',
+              '&:hover': { bgcolor: 'primary.light' },
+              '&.Mui-disabled': { bgcolor: 'surface.subtle', color: 'text.muted' },
             } }
           >
             { isSubmitting ? '남기는 중...' : '방명록 남기기' }

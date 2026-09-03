@@ -64,16 +64,18 @@ function ProjectCard({ project }) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: 'background.paper',
-        border: '2px solid',
-        borderColor: 'secondary.main',
+        bgcolor: 'surface.elevated',
+        border: '1px solid',
+        borderColor: 'line.main',
         borderRadius: { xs: '16px', md: '20px' },
-        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+        transition:
+          'transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s ease, border-color 0.25s ease',
         /** 호버 효과는 포인터 장치에서만 — 모바일에서는 눌림 피드백으로 대체 */
         '@media (hover: hover)': {
           '&:hover': {
             transform: 'translateY(-6px) scale(1.02)',
-            boxShadow: '8px 8px 0 #0B0B0B',
+            borderColor: 'primary.main',
+            boxShadow: '6px 6px 0 #DDFF50',
           },
           '&:hover img': { transform: 'scale(1.06)' },
         },
@@ -89,7 +91,7 @@ function ProjectCard({ project }) {
             right: 0,
             zIndex: 2,
             height: 4,
-            bgcolor: 'brand.surfaceSubtle',
+            bgcolor: 'surface.subtle',
             '& .MuiLinearProgress-bar': { bgcolor: 'primary.main' },
           } }
         />
@@ -162,9 +164,9 @@ function ProjectCard({ project }) {
                 minHeight: 40,
                 px: 1.5,
                 fontSize: '0.82rem',
-                bgcolor: 'secondary.main',
-                color: 'brand.textInverse',
-                '&:hover': { bgcolor: 'brand.surfaceDark' },
+                bgcolor: 'primary.main',
+                color: 'brand.onBrand',
+                '&:hover': { bgcolor: 'primary.light' },
               } }
             >
               사이트
@@ -184,11 +186,15 @@ function ProjectCard({ project }) {
                 minHeight: 40,
                 px: 1.5,
                 fontSize: '0.82rem',
-                bgcolor: 'background.paper',
-                color: 'secondary.main',
-                border: '2px solid',
-                borderColor: 'secondary.main',
-                '&:hover': { bgcolor: 'primary.main' },
+                bgcolor: 'transparent',
+                color: 'text.primary',
+                border: '1px solid',
+                borderColor: 'line.main',
+                '&:hover': {
+                  bgcolor: 'primary.main',
+                  color: 'brand.onBrand',
+                  borderColor: 'primary.main',
+                },
               } }
             >
               GitHub

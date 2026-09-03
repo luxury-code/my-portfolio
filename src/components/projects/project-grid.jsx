@@ -5,10 +5,10 @@ import Skeleton from '@mui/material/Skeleton';
 import ProjectCard from './project-card.jsx';
 
 /** 반응형 열 구성 — 데스크톱 4열 / 태블릿 2열 / 모바일 1열 */
-const GRID_SIZE = { xs: 12, sm: 6, lg: 3 };
+const DEFAULT_GRID_SIZE = { xs: 12, sm: 6, lg: 3 };
 
 /** 로딩 중 보여줄 스켈레톤 카드 개수 */
-const SKELETON_COUNT = 4;
+const DEFAULT_SKELETON_COUNT = 4;
 
 /**
  * 로딩 상태용 스켈레톤 카드.
@@ -19,8 +19,8 @@ function ProjectCardSkeleton() {
     <Box
       sx={ {
         height: '100%',
-        border: '2px solid',
-        borderColor: 'brand.surfaceSubtle',
+        border: '1px solid',
+        borderColor: 'line.soft',
         borderRadius: { xs: '16px', md: '20px' },
         overflow: 'hidden',
       } }
@@ -45,16 +45,24 @@ function ProjectCardSkeleton() {
  * @param {array} projects - 표시할 프로젝트 배열 [Required]
  * @param {boolean} isLoading - 로딩 중 여부 [Optional, 기본값: false]
  * @param {string} error - 오류 메시지 (없으면 빈 문자열) [Optional, 기본값: '']
+ * @param {object} gridSize - Grid size 속성 [Optional, 기본값: { xs: 12, sm: 6, lg: 3 }]
+ * @param {number} skeletonCount - 로딩 스켈레톤 개수 [Optional, 기본값: 4]
  *
  * Example usage:
  * <ProjectGrid projects={ projects } isLoading={ isLoading } error={ error } />
  */
-function ProjectGrid({ projects, isLoading = false, error = '' }) {
+function ProjectGrid({
+  projects,
+  isLoading = false,
+  error = '',
+  gridSize = DEFAULT_GRID_SIZE,
+  skeletonCount = DEFAULT_SKELETON_COUNT,
+}) {
   if (error) {
     return (
       <Alert
         severity="error"
-        sx={ { borderRadius: '16px', border: '2px solid', borderColor: 'secondary.main' } }
+        sx={ { borderRadius: '16px', border: '1px solid', borderColor: 'line.main' } }
       >
         { error }
       </Alert>
@@ -64,8 +72,8 @@ function ProjectGrid({ projects, isLoading = false, error = '' }) {
   if (isLoading) {
     return (
       <Grid container spacing={ { xs: 2, md: 3 } }>
-        { Array.from({ length: SKELETON_COUNT }, (_, index) => (
-          <Grid key={ `skeleton-${ index }` } size={ GRID_SIZE }>
+        { Array.from({ length: skeletonCount }, (_, index) => (
+          <Grid key={ `skeleton-${ index }` } size={ gridSize }>
             <ProjectCardSkeleton />
           </Grid>
         )) }
@@ -80,8 +88,10 @@ function ProjectGrid({ projects, isLoading = false, error = '' }) {
           py: { xs: 6, md: 8 },
           textAlign: 'center',
           color: 'text.secondary',
-          bgcolor: 'brand.surfaceSubtle',
-          borderRadius: '20px',
+          bgcolor: 'surface.subtle',
+          border: '1px dashed',
+          borderColor: 'line.soft',
+          borderRadius: '16px',
           fontSize: { xs: '0.95rem', md: '1rem' },
         } }
       >
@@ -93,7 +103,7 @@ function ProjectGrid({ projects, isLoading = false, error = '' }) {
   return (
     <Grid container spacing={ { xs: 2, md: 3 } }>
       { projects.map((project) => (
-        <Grid key={ project.id } size={ GRID_SIZE }>
+        <Grid key={ project.id } size={ gridSize }>
           <ProjectCard project={ project } />
         </Grid>
       )) }

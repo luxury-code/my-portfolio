@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ProjectGrid from '../components/projects/project-grid.jsx';
+import SectionHeader from '../components/ui/section-header.jsx';
 import { useProjects } from '../hooks/use-projects.js';
 
 /**
@@ -27,43 +28,21 @@ function ProjectsPage() {
       } }
     >
       <Container maxWidth="lg" sx={ { px: { xs: 2, md: 3 } } }>
-        <Box sx={ { mb: { xs: 3, md: 5 } } }>
-          <Box
-            component="span"
-            sx={ {
-              display: 'inline-block',
-              bgcolor: 'accent.cyan',
-              color: 'secondary.main',
-              borderRadius: '999px',
-              px: 1.75,
-              py: 0.5,
-              fontSize: { xs: '0.72rem', md: '0.78rem' },
-              fontWeight: 700,
-              letterSpacing: '0.08em',
-            } }
-          >
-            PROJECTS
-          </Box>
+        <SectionHeader label="WORKS" meta="ALL PROJECTS" />
 
+        <Box sx={ { mb: { xs: 3, md: 5 } } }>
           <Typography
             variant="h1"
             sx={ {
               mt: 2,
               mb: 1.5,
               color: 'text.primary',
-              fontSize: { xs: '2rem', md: '3rem' },
             } }
           >
             나의 프로젝트들
           </Typography>
 
-          <Typography
-            sx={ {
-              color: 'text.secondary',
-              fontSize: { xs: '0.95rem', md: '1.05rem' },
-              maxWidth: 640,
-            } }
-          >
+          <Typography variant="body1" sx={ { color: 'text.secondary', maxWidth: 640 } }>
             기획부터 배포까지 직접 진행한 프로젝트입니다. 카드를 눌러 실제 서비스와 저장소를 확인해 보세요.
           </Typography>
         </Box>

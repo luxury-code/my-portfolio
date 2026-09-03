@@ -32,8 +32,10 @@ function GuestbookEntry({ entry }) {
       component="li"
       sx={ {
         listStyle: 'none',
-        bgcolor: 'background.default',
-        borderRadius: '20px',
+        bgcolor: 'surface.elevated',
+        border: '1px solid',
+        borderColor: 'line.soft',
+        borderRadius: '16px',
         p: { xs: 2, md: 2.5 },
         display: 'flex',
         gap: { xs: 1.5, md: 2 },
@@ -73,7 +75,7 @@ function GuestbookEntry({ entry }) {
               size="small"
               label={ entry.affiliation }
               sx={ {
-                bgcolor: 'brand.surfaceSubtle',
+                bgcolor: 'surface.subtle',
                 color: 'text.secondary',
                 fontSize: '0.75rem',
               } }
