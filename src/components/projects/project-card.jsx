@@ -66,7 +66,7 @@ function ProjectCard({ project }) {
         overflow: 'hidden',
         bgcolor: 'surface.elevated',
         border: '1px solid',
-        borderColor: 'line.main',
+        borderColor: 'line.base',
         borderRadius: { xs: '16px', md: '20px' },
         transition:
           'transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s ease, border-color 0.25s ease',
@@ -189,7 +189,7 @@ function ProjectCard({ project }) {
                 bgcolor: 'transparent',
                 color: 'text.primary',
                 border: '1px solid',
-                borderColor: 'line.main',
+                borderColor: 'line.base',
                 '&:hover': {
                   bgcolor: 'primary.main',
                   color: 'brand.onBrand',

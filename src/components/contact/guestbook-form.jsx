@@ -36,7 +36,7 @@ const fieldSx = {
     bgcolor: 'surface.inset',
     borderRadius: '14px',
     '& fieldset': { borderColor: 'line.soft' },
-    '&:hover fieldset': { borderColor: 'line.main' },
+    '&:hover fieldset': { borderColor: 'line.base' },
     '&.Mui-focused fieldset': { borderColor: 'primary.main', borderWidth: 2 },
   },
   '& .MuiInputLabel-root.Mui-focused': { color: 'primary.main' },

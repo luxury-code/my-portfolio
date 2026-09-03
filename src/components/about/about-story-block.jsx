@@ -43,7 +43,7 @@ function AboutStoryBlock({ index, title, lead, paragraphs = [], tags = [], isLas
         } }
       >
         <Box component="span" sx={ { color: 'primary.main' } }>{ index }</Box>
-        <Box component="span" aria-hidden="true" sx={ { flex: '0 0 24px', height: '1px', bgcolor: 'line.main' } } />
+        <Box component="span" aria-hidden="true" sx={ { flex: '0 0 24px', height: '1px', bgcolor: 'line.base' } } />
         <Box component="span">{ title }</Box>
       </Box>
 
@@ -83,7 +83,7 @@ function AboutStoryBlock({ index, title, lead, paragraphs = [], tags = [], isLas
                 py: 0.5,
                 borderRadius: '999px',
                 border: '1px solid',
-                borderColor: 'line.main',
+                borderColor: 'line.base',
                 color: 'text.secondary',
                 fontFamily: fontFamilies.mono,
                 fontSize: '0.75rem',

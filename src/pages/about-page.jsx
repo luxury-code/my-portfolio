@@ -168,7 +168,7 @@ function AboutPage() {
                 bgcolor: 'transparent',
                 color: 'text.primary',
                 border: '1px solid',
-                borderColor: 'line.main',
+                borderColor: 'line.base',
                 '&:hover': {
                   bgcolor: 'primary.main',
                   color: 'brand.onBrand',

@@ -87,7 +87,7 @@ function SkillTreeSection() {
                 minWidth: 16,
                 alignSelf: 'center',
                 borderBottom: '1px dotted',
-                borderColor: 'line.main',
+                borderColor: 'line.base',
                 transform: 'translateY(-2px)',
               } }
             />

@@ -14,11 +14,17 @@ export const fontFamilies = {
 
 /**
  * 컬러 토큰 (v2 — 다크 베이스)
- * index.css 의 CSS 변수와 1:1 대응한다.
- * 브랜드 색은 고정, 표면·텍스트·경계선은 CSS 변수를 통해 테마에 따라 바뀐다.
+ *
+ * ⚠️ 팔레트 값에는 반드시 실제 색상값(hex · rgb · rgba)만 넣는다.
+ *    MUI 내부는 alpha() / lighten() / darken() 로 팔레트 색을 가공하는데,
+ *    이 함수들은 CSS 변수 var(--x) 를 파싱하지 못하고 예외를 던진다.
+ *    (Button · Chip · Skeleton 등이 렌더될 때 MUI error #9 발생)
+ *
+ * index.css 의 CSS 변수는 body · 링크 · 포커스링 · 오로라 등
+ * 순수 CSS 영역에서만 쓰고, 아래 값과 짝을 맞춰 관리한다.
  */
 export const colorTokens = {
-  /** 브랜드 — 테마와 무관하게 고정 */
+  /** 브랜드 */
   primary: '#DDFF50',
   primaryLight: '#ECFF9B',
   primaryDark: '#C3E046',
@@ -29,27 +35,29 @@ export const colorTokens = {
   accentPeach: '#FFCBA9',
   accentAmber: '#F0A868',
 
-  /** 오로라 그라디언트 스톱 (P1 Hero) */
+  /** 오로라 그라디언트 스톱 */
   auroraCore: '#DDFF50',
   auroraSpread: '#ECFF9B',
   auroraMid: '#7FE0C1',
   auroraEdge: '#CAB8F6',
 
-  /** 표면·텍스트·경계선 — CSS 변수 참조 (테마 전환 대응) */
-  bgBase: 'var(--color-bg-base)',
-  surfaceElevated: 'var(--color-surface-elevated)',
-  surfaceSubtle: 'var(--color-surface-subtle)',
-  surfaceWarm: 'var(--color-surface-warm)',
-  surfaceInset: 'var(--color-surface-inset)',
+  /** 표면 — index.css 의 --color-bg-base / --color-surface-* 와 동일 */
+  bgBase: '#0B0B0B',
+  surfaceElevated: '#131313',
+  surfaceSubtle: '#191919',
+  surfaceWarm: '#1A1613',
+  surfaceInset: '#0E0E0E',
 
-  textPrimary: 'var(--color-text-primary)',
-  textSecondary: 'var(--color-text-secondary)',
-  textMuted: 'var(--color-text-muted)',
-  textOnBrand: 'var(--color-text-on-brand)',
+  /** 텍스트 — index.css 의 --color-text-* 와 동일 */
+  textPrimary: '#F8F8F7',
+  textSecondary: '#ADADAD',
+  textMuted: '#8A8A8A',
+  textOnBrand: '#0B0B0B',
 
-  lineSoft: 'var(--color-line-soft)',
-  line: 'var(--color-line)',
-  lineStrong: 'var(--color-line-strong)',
+  /** 경계선 — rgba() 는 alpha() 가 파싱할 수 있어 안전하다 */
+  lineSoft: 'rgba(248, 248, 247, 0.12)',
+  lineBase: 'rgba(248, 248, 247, 0.2)',
+  lineStrong: 'rgba(248, 248, 247, 0.32)',
 
   radiusCard: 20,
   radiusPill: 999,
@@ -58,7 +66,6 @@ export const colorTokens = {
 /**
  * 타이포 스케일 — 전부 clamp() 기반
  * 브레이크포인트에서 크기가 뚝 끊기지 않고 뷰포트에 연속적으로 반응한다.
- * (레퍼런스 nexstudio.tech 에서 채택한 방식)
  */
 export const typeScale = {
   h1: 'clamp(2.4rem, 7vw, 5rem)',
@@ -77,10 +84,10 @@ const theme = createTheme({
       main: colorTokens.primary,
       light: colorTokens.primaryLight,
       dark: colorTokens.primaryDark,
-      contrastText: '#0B0B0B',
+      contrastText: colorTokens.textOnBrand,
     },
     secondary: {
-      main: '#0B0B0B',
+      main: colorTokens.bgBase,
       contrastText: colorTokens.primary,
     },
     background: {
@@ -96,6 +103,13 @@ const theme = createTheme({
     },
     divider: colorTokens.lineSoft,
 
+    /**
+     * ⚠️ 아래 확장 팔레트에는 'main' 키를 두지 않는다.
+     *    MUI 는 main 을 가진 팔레트 항목을 색상 팔레트로 간주해
+     *    Button · Chip 등에서 순회하며 alpha() 로 가공하려 한다.
+     *    (line.main 이 있었을 때 실제로 MUI error #9 가 발생했다)
+     */
+
     /** 파스텔 계열 — 장식이 아니라 "정보 코드"로 사용 */
     accent: {
       lavender: colorTokens.accentLavender,
@@ -106,7 +120,7 @@ const theme = createTheme({
       amber: colorTokens.accentAmber,
     },
 
-    /** 표면·경계선 확장 토큰 */
+    /** 표면 — 밤하늘에서 얼마나 떠 있는가 */
     surface: {
       base: colorTokens.bgBase,
       elevated: colorTokens.surfaceElevated,
@@ -114,11 +128,14 @@ const theme = createTheme({
       warm: colorTokens.surfaceWarm,
       inset: colorTokens.surfaceInset,
     },
+
+    /** 경계선 */
     line: {
       soft: colorTokens.lineSoft,
-      main: colorTokens.line,
+      base: colorTokens.lineBase,
       strong: colorTokens.lineStrong,
     },
+
     brand: {
       onBrand: colorTokens.textOnBrand,
       aurora: {
@@ -226,7 +243,6 @@ const theme = createTheme({
         },
       },
     },
-    /** 다크 배경에서 Alert 가 밝은 면으로 튀지 않도록 */
     MuiAlert: {
       styleOverrides: {
         root: { borderRadius: 16 },

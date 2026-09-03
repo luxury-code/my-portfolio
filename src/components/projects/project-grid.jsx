@@ -62,7 +62,7 @@ function ProjectGrid({
     return (
       <Alert
         severity="error"
-        sx={ { borderRadius: '16px', border: '1px solid', borderColor: 'line.main' } }
+        sx={ { borderRadius: '16px', border: '1px solid', borderColor: 'line.base' } }
       >
         { error }
       </Alert>
