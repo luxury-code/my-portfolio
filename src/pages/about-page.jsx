@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import AboutBasicInfo from '../components/about/about-basic-info.jsx';
-import AboutSectionTabs from '../components/about/about-section-tabs.jsx';
+import AboutSectionAccordion from '../components/about/about-section-accordion.jsx';
 import SectionHeader from '../components/ui/section-header.jsx';
 import { aboutMeData, pickRandomPhoto } from '../utils/about-me-data.js';
 import { fontFamilies } from '../theme.js';
@@ -15,7 +15,7 @@ import { fontFamilies } from '../theme.js';
  * AboutPage 컴포넌트
  * About Me 탭(/about)의 페이지.
  *
- * 상단에 기본 정보 카드, 아래에 이야기 3편을 탭으로 배치한다.
+ * 상단에 기본 정보 카드, 아래에 이야기 3편을 아코디언으로 배치한다.
  * 데이터는 useState 로 들고 있으며, 프로필 사진 교체가 실제로 상태를 갱신한다.
  *
  * Props: 없음
@@ -25,7 +25,6 @@ import { fontFamilies } from '../theme.js';
  */
 function AboutPage() {
   const [aboutMe, setAboutMe] = useState(aboutMeData);
-  const [activeSectionId, setActiveSectionId] = useState(aboutMeData.sections[0].id);
 
   /** 프로필 사진을 다른 Unsplash 이미지로 교체한다 */
   const handleRefreshPhoto = () => {
@@ -58,14 +57,35 @@ function AboutPage() {
             onRefreshPhoto={ handleRefreshPhoto }
           />
 
-          <AboutSectionTabs
-            sections={ aboutMe.sections }
-            activeId={ activeSectionId }
-            onChange={ setActiveSectionId }
-          />
+          <Box
+            component="section"
+            aria-labelledby="about-sections-heading"
+            sx={ {
+              borderRadius: { xs: '16px', md: '20px' },
+              border: '1px solid',
+              borderColor: 'line.soft',
+              bgcolor: 'surface.subtle',
+              p: { xs: 2, md: 4 },
+            } }
+          >
+            <Box
+              id="about-sections-heading"
+              sx={ {
+                color: 'primary.main',
+                fontFamily: fontFamilies.mono,
+                fontSize: '0.72rem',
+                letterSpacing: '0.14em',
+                mb: 2.5,
+              } }
+            >
+              MY STORY
+            </Box>
+
+            <AboutSectionAccordion sections={ aboutMe.sections } />
+          </Box>
         </Stack>
 
-        { /** 탭 옆 점 표식이 무엇을 뜻하는지 알려 준다 */ }
+        { /** 제목 옆 점 표식이 무엇을 뜻하는지 알려 준다 */ }
         <Box
           sx={ {
             mt: 2,

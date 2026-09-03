@@ -95,3 +95,33 @@ export const aboutMeData = {
 export function selectHomeSections(data = aboutMeData) {
   return data.sections.filter((section) => section.showInHome);
 }
+
+/**
+ * 본문을 빈 줄(\n\n) 기준으로 나눠, 첫 문단을 리드문으로 분리한다.
+ * 각 섹션의 첫 문단이 그 이야기를 한 문장으로 요약하도록 쓰여 있어
+ * 매거진의 리드문 자리에 그대로 쓸 수 있다.
+ *
+ * @param {string} content - 빈 줄로 문단이 구분된 본문 [Required]
+ * @returns {object} lead(첫 문단), paragraphs(나머지 문단 배열)
+ *
+ * Example usage:
+ * const { lead, paragraphs } = splitContent(section.content);
+ */
+export function splitContent(content = '') {
+  const [lead = '', ...rest] = content.split('\n\n').filter(Boolean);
+
+  return { lead, paragraphs: rest };
+}
+
+/**
+ * 배열 순서를 '01' 형태의 두 자리 번호로 바꾼다.
+ *
+ * @param {number} index - 0부터 시작하는 배열 인덱스 [Required]
+ * @returns {string} 두 자리 번호 문자열
+ *
+ * Example usage:
+ * formatIndex(0); // '01'
+ */
+export function formatIndex(index) {
+  return String(index + 1).padStart(2, '0');
+}
